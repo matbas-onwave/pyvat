@@ -60,6 +60,11 @@ VAT_NUMBER_FORMAT_CASES = {
         ('1I345678901', False),
         ('II345678901', False),
     ],
+    'GB': [
+        ('123456789', True),
+        ('123456789001', True),
+        ('999999999999999999999999999999999999', False),
+    ],
     'GR': [
         ('012345678', True),
     ],
@@ -129,8 +134,7 @@ VAT_NUMBER_CHECK_CASES = {
         ('0438390312',
          VatNumberCheckResult(
              True,
-             business_name=u'NV UNILEVER BELGIUM - UNILEVER BELGIQUE - '
-             u'UNILEVER BELGIE',
+             business_name=u'NV UNILEVER BELGIUM',
              business_address=u'Industrielaan 9\n1070 Anderlecht'
          )),
     ],
