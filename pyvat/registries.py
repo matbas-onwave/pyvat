@@ -31,7 +31,7 @@ class ViesRegistry(Registry):
     Uses the European Commision's VIES registry for validating VAT numbers.
     """
 
-    CHECK_VAT_SERVICE_URL = 'http://ec.europa.eu/taxation_customs/vies/' \
+    CHECK_VAT_SERVICE_URL = 'https://ec.europa.eu/taxation_customs/vies/' \
         'services/checkVatService'
     """URL for the VAT checking service.
     """
