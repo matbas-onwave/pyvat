@@ -11,6 +11,7 @@ EU_COUNTRY_CODES = set([
     'FI',  # Finland.
     'FR',  # France.
     'EL', 'GR',  # Greece.
+    'GB',  # United Kingdom
     'HR',  # Croatia.
     'HU',  # Hungary.
     'IE',  # Ireland.
@@ -26,6 +27,7 @@ EU_COUNTRY_CODES = set([
     'SE',  # Sweden.
     'SI',  # Slovenia.
     'SK',  # Slovakia.
+    'XI',  # Northern Ireland.
 ])
 """EU country codes.
 
