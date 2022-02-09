@@ -180,4 +180,73 @@ class ViesRegistry(Registry):
         return result
 
 
-__all__ = ('Registry', 'ViesRegistry', )
+class UKRegistry(Registry):
+    """UK registry.
+
+    Uses the UK's registry for validating VAT numbers.
+    """
+
+    CHECK_VAT_SERVICE_URL = 'https://api.service.hmrc.gov.uk/organisations/' \
+        'vat/check-vat-number/lookup/{targetVrn}'
+    """URL for the VAT checking service.
+    """
+
+    DEFAULT_TIMEOUT = 8
+    """Timeout for the requests."""
+
+    def check_vat_number(self, vat_number, country_code):
+        # Request information about the VAT number.
+        result = VatNumberCheckResult()
+
+        request_url = self.CHECK_VAT_SERVICE_URL.format(targetVrn=vat_number)
+
+        try:
+            response = requests.get(
+                request_url,
+                timeout=self.DEFAULT_TIMEOUT
+            )
+        except Timeout as e:
+            result.log_lines.append(u'< Request to UK VAT registry timed out:'
+                                    u' {}'.format(e))
+            return result
+        except Exception as exception:
+            # Do not completely fail problematic requests.
+            result.log_lines.append(u'< Request failed with exception: %r' %
+                                    (exception))
+            return result
+
+        # Log response information.
+        result.log_lines += [
+            u'< Response with status %d of content type %s:' %
+            (response.status_code, response.headers['Content-Type']),
+            response.text,
+            ]
+
+        result.is_valid = True if response.ok else False
+
+        # Do not completely fail problematic requests.
+        if response.status_code != 200 or \
+                not response.headers['Content-Type'].startswith('application/json'):
+            result.log_lines.append(u'< Response is nondeterministic due to '
+                                    u'invalid response status code or MIME '
+                                    u'type')
+            return result
+
+        data = response.json()
+
+        try:
+            result.business_name = data.get('target').get('name')
+        except Exception:
+            pass
+
+        try:
+            address = data.get('target').get('address').copy()
+            address.pop('countryCode')
+            result.business_address = ', '.join(address.values())
+        except Exception:
+            pass
+
+        return result
+
+
+__all__ = ('Registry', 'ViesRegistry', 'UKRegistry', )
