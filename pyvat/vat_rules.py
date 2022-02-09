@@ -221,6 +221,17 @@ class FiVatRules(ConstantEuVatRateRules):
         return super(FiVatRules, self).get_vat_rate(item_type)
 
 
+class GbVatRules(ConstantEuVatRateRules):
+    """VAT rules for United Kingdom.
+    """
+
+    def get_vat_rate(self, item_type):
+        if item_type == ItemType.ebook:
+            return Decimal(0)
+
+        return super(GbVatRules, self).get_vat_rate(item_type)
+
+
 class NlVatRules(ConstantEuVatRateRules):
     """VAT rules for Netherlands.
     """
@@ -354,6 +365,7 @@ VAT_RULES = {
     'DK': ConstantEuVatRateRules(25),
     'EE': ConstantEuVatRateRules(20),
     'EL': ElVatRules(),
+    'GB': GbVatRules(20),
     'GR': ElVatRules(),  # Synonymous country code for Greece
     'ES': EsVatRules(),
     'FI': FiVatRules(24),
@@ -373,6 +385,7 @@ VAT_RULES = {
     'SE': SeVatRules(25),
     'SK': ConstantEuVatRateRules(20),
     'SI': ConstantEuVatRateRules(22),
+    'XI': GbVatRules(20),
 }
 
 """VAT rules by country.
