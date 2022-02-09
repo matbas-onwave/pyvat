@@ -130,6 +130,14 @@ VAT_NUMBER_CHECK_CASES = {
     '': [
         ('123456', VatNumberCheckResult(False)),
     ],
+    'GB': [
+        ('332779677', VatNumberCheckResult(
+            True,
+            business_name=u'SRL TRAFFIC SYSTEMS LIMITED',
+            business_address=u'THE RADIO LIGHT HOUSE\nBROOKS LANE\nMIDDLEWICH\nCW10 0JG'
+        )),
+        ('999999O99', VatNumberCheckResult(False)),
+    ],
     'BE': [
         ('0438390312',
          VatNumberCheckResult(
@@ -137,6 +145,7 @@ VAT_NUMBER_CHECK_CASES = {
              business_name=u'NV UNILEVER BELGIUM',
              business_address=u'Industrielaan 9\n1070 Anderlecht'
          )),
+        ('99999O99', VatNumberCheckResult(False)),
     ],
     'DK': [
         ('54562519', VatNumberCheckResult(
