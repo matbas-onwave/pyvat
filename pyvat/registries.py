@@ -242,7 +242,7 @@ class UKRegistry(Registry):
         try:
             address = data.get('target').get('address').copy()
             address.pop('countryCode')
-            result.business_address = ', '.join(address.values())
+            result.business_address = '\n'.join(address.values())
         except Exception:
             pass
 
