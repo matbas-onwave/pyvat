@@ -2,7 +2,7 @@ import re
 import pycountry
 from .item_type import ItemType
 from .party import Party
-from .registries import ViesRegistry
+from .registries import ViesRegistry, UKRegistry
 from .result import VatNumberCheckResult
 from .vat_charge import VatCharge, VatChargeAction
 from .vat_rules import VAT_RULES
@@ -30,6 +30,8 @@ VAT_NUMBER_EXPRESSIONS = {
     'ES': re.compile(r'^[\da-z]\d{7}[\da-z]$', re.IGNORECASE),
     'FI': re.compile(r'^\d{8}$'),
     'FR': re.compile(r'^[\da-hj-np-z]{2}\d{9}$', re.IGNORECASE),
+    'GB': re.compile(r'^((\d{9})|(\d{12})|(GD\d{3})|(HA\d{3}))$',
+                     re.IGNORECASE),
     'GR': re.compile(r'^\d{9}$'),
     'HR': re.compile(r'^\d{11}$'),
     'HU': re.compile(r'^\d{8}$'),
@@ -47,6 +49,7 @@ VAT_NUMBER_EXPRESSIONS = {
     'SE': re.compile(r'^\d{12}$'),
     'SI': re.compile(r'^\d{8}$'),
     'SK': re.compile(r'^\d{10}$'),
+    'XI': re.compile(r'^\d{2,13}$'),
 }
 """VAT number expressions.
 
@@ -60,6 +63,7 @@ EU VAT number structures are retrieved from `VIES
 
 
 VIES_REGISTRY = ViesRegistry()
+UK_REGISTRY = UKRegistry()
 """VIES registry instance.
 """
 
@@ -76,9 +80,10 @@ VAT_REGISTRIES = {
     'ES': VIES_REGISTRY,
     'FI': VIES_REGISTRY,
     'FR': VIES_REGISTRY,
+    'GB': UK_REGISTRY,
     'GR': VIES_REGISTRY,
-    'HU': VIES_REGISTRY,
     'HR': VIES_REGISTRY,
+    'HU': VIES_REGISTRY,
     'IE': VIES_REGISTRY,
     'IT': VIES_REGISTRY,
     'LT': VIES_REGISTRY,
@@ -90,8 +95,9 @@ VAT_REGISTRIES = {
     'PT': VIES_REGISTRY,
     'RO': VIES_REGISTRY,
     'SE': VIES_REGISTRY,
-    'SK': VIES_REGISTRY,
     'SI': VIES_REGISTRY,
+    'SK': VIES_REGISTRY,
+    'XI': VIES_REGISTRY,
 }
 """VAT registries.
 
